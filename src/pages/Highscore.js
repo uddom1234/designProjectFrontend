@@ -19,7 +19,7 @@ const Highscore = () => {
 
   return (
     <div className="container my-2">
-      <h1 className="my-4 d-flex justify-content-center">High Score Calculator</h1>
+      <h1 className="my-4 d-flex justify-content-center">High Score</h1>
 
       <div className="form-group ">
         <label>Competition:</label>
@@ -45,8 +45,8 @@ const Highscore = () => {
         </select>
       </div>
       <div class="d-flex justify-content-center my-2">
-        <button className="btn btn-primary " onClick={handleCalculateClick}>
-            Calculate High Score
+        <button className="btn btn-success" onClick={handleCalculateClick}>
+            Show High Score
         </button>
       </div>
 
