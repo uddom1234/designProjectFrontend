@@ -8,15 +8,33 @@ const Competitions = () => {
     const [competitionID, setCompetitionID] = useState("");
 
     const handleInsertCompetition = () => {
-        // Call API to insert competition
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ competitionName, date, competitionType, categoryID })
+        };
+        fetch('http://localhost:4000/competition/insertCompetition', requestOptions)
+            .then(response => response.json())
+            .then(data => console.log(data));
     };
-
+    
     const handleGetAllCompetitions = () => {
-        // Call API to get all competitions
+        fetch('http://localhost:4000/competition/allCompetition')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+            });
     };
-
+    
     const handleDeleteCompetition = (competitionID) => {
-        // Call API to delete a competition
+        const requestOptions = {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ competitionID })
+        };
+        fetch('http://localhost:4000/competition/deleteCompetition', requestOptions)
+            .then(response => response.json())
+            .then(data => console.log(data));
     };
 
     return (
@@ -29,18 +47,18 @@ const Competitions = () => {
                 <input type="date" value={date} onChange={e => setDate(e.target.value)} />
                 <input type="text" value={competitionType} onChange={e => setCompetitionType(e.target.value)} placeholder="Competition Type" />
                 <input type="number" value={categoryID} onChange={e => setCategoryID(e.target.value)} placeholder="Category ID" />
-                <button onClick={handleInsertCompetition}>Insert</button>
+                <button className="btn btn-primary mx-2" onClick={handleInsertCompetition}>Insert</button>
             </div>
 
-            <div>
+            <div className=' my-2'>
                 <h2>All Competitions</h2>
-                <button onClick={handleGetAllCompetitions}>Get All</button>
+                <button className="btn btn-primary" onClick={handleGetAllCompetitions}>Get All</button>
             </div>
 
             <div>
                 <h2>Delete Competition</h2>
                 <input type="number" placeholder="Competition ID" value={competitionID} onChange={e => setCompetitionID(e.target.value)}/>
-                <button onClick={() => handleDeleteCompetition(1)}>Delete</button>
+                <button className="btn btn-primary mx-2" onClick={() => handleDeleteCompetition(1)}>Delete</button>
             </div>
         </div>
     );

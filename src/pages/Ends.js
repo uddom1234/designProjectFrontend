@@ -25,26 +25,37 @@ const Ends = () => {
 
     
     const handleChooseArcher = (selectedArcherID) => {
+
         const requestOptions = {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ archerID: selectedArcherID })
-        };
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ archerID: selectedArcherID })
+          };
+        try {
+            if(selectedArcherID) {
+                fetch('http://localhost:4000/api/chooseArcher', requestOptions)
+                .then(response => response.json())
+                .then(data => {
+                  console.log(data);
+                  setArcherID(data[0].archerID);
+                  setArcher(data); // Update this line
+                });
+            
+              fetch('http://localhost:4000/api/equipment', requestOptions)
+                .then(response => response.json())
+                .then(data => {
+                  console.log(data);
+                  setEquipment(data);
+                });
+            }
+        }
+        catch {
+            alert('error')
+        }
+
+
       
-        fetch('http://localhost:4000/api/chooseArcher', requestOptions)
-          .then(response => response.json())
-          .then(data => {
-            console.log(data);
-            setArcherID(data[0].archerID);
-            setArcher(data); // Update this line
-          });
-      
-        fetch('http://localhost:4000/api/equipment', requestOptions)
-          .then(response => response.json())
-          .then(data => {
-            console.log(data);
-            setEquipment(data);
-          });
+
       };
 
       const insertScore = (score) => {
@@ -55,7 +66,8 @@ const Ends = () => {
           };
 
         fetch('http://localhost:4000/api/insertEnd', requestOptions)
-          .then(response => console.log(response))
+          .then(response => alert('Successfully added'))
+          .catch(err => alert('Error'))
       }
       
 

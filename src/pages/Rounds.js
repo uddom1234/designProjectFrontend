@@ -1,27 +1,44 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const Rounds = () => {
     const [roundTypeID, setRoundTypeID] = useState("");
     const [competitionID, setCompetitionID] = useState("");
     const [startTime, setStartTime] = useState("");
     const [roundID, setRoundID] = useState("");
+    const [allRound, setAllRound] = useState([]);
 
     const handleInsertRound = () => {
-        // Call API to insert round
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ roundTypeID, competitionID, startTime })
+        };
+        fetch('http://localhost:4000/round/insertRound', requestOptions)
+            .then(response => response.json())
+            .then(data => alert(data));
     };
+
 
     const handleGetAllRounds = () => {
-        // Call API to get all rounds
+        fetch('http://localhost:4000/round/allRound').then(res => {
+            return res.json();
+          }).then(data => {
+            setAllRound(data);
+            alert(data);
+          });
     };
 
-    const handleUpdateStartTime = () => {
-        // Call API to update start time
-    };
 
     const handleDeleteRound = () => {
-        // Call API to delete round
+        const requestOptions = {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ roundID })
+        };
+        fetch('http://localhost:4000/round/deleteRound', requestOptions)
+            .then(response => response.json())
+            .then(data => console.log(data));
     };
-
     return (
         <div className="container">
             <h1 className="my-4 d-flex justify-content-center">Rounds</h1>
@@ -39,12 +56,6 @@ const Rounds = () => {
                 <button className="btn btn-primary" onClick={handleGetAllRounds}>Get All</button>
             </div>
 
-            <div className="my-2">
-                <h2>Update Start Time</h2>
-                <input className="mr-2" type="number" value={roundID} onChange={e => setRoundID(e.target.value)} placeholder="Round ID" />
-                <input type="datetime-local" value={startTime} onChange={e => setStartTime(e.target.value)} />
-                <button className="btn btn-primary mx-2" onClick={handleUpdateStartTime}>Update Start Time</button>
-            </div>
 
             <div className="my-2">
                 <h2>Delete Round</h2>

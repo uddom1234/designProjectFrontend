@@ -27,7 +27,14 @@ function InsertArcher() {
     };
 
     const insertArcher = async () => {
-        // fetch call as before
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(archerData)
+        };
+        fetch('http://localhost:4000/archer/insertArcher', requestOptions)
+            .then(response => response.json())
+            .then(data => console.log(data));
     };
 
     return (
@@ -51,7 +58,16 @@ function GetScore() {
     };
 
     const getScore = async () => {
-        // fetch call as before
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ archerID })
+        };
+        fetch('http://localhost:4000/archer/getScore', requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+            });
     };
 
     return (
@@ -71,7 +87,14 @@ function DeleteArcher() {
     };
 
     const deleteArcher = async () => {
-        // fetch call as before
+        const requestOptions = {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ archerID })
+        };
+        fetch('http://localhost:4000/archer/deleteArcher', requestOptions)
+            .then(response => response.json())
+            .then(data => console.log(data));
     };
 
     return (
